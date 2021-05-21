@@ -1,3 +1,3 @@
-module github.com/liuping001/easygo
+module github.com/liuping001/fastgo
 
 go 1.14
