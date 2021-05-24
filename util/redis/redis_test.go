@@ -1,4 +1,3 @@
-// Copyright 2021, Tencent Inc.
 // Author: coolliu
 // Date: 2021/5/21
 
