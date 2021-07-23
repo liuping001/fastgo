@@ -1,15 +1,9 @@
 // Author: coolliu
-// Date: 2021/5/21
+// Date: 2021/7/23
 
 package log
 
-import (
-	"io"
-	golog "log"
-	"os"
-)
-
-type Log interface {
+type LogI interface {
 	Fatalf(format string, args ...interface{})
 	Fatal(args ...interface{})
 	Errorf(format string, args ...interface{})
@@ -22,46 +16,46 @@ type Log interface {
 	Debug(args ...interface{})
 }
 
-type DefaultLog struct {
+func Fatalf(format string, args ...interface{}) {
+	gLog.Fatalf(format, args...)
+}
+func Fatal(args ...interface{}) {
+	gLog.Fatal(args...)
+}
+func Errorf(format string, args ...interface{}) {
+	gLog.Errorf(format, args...)
+}
+func Error(args ...interface{}) {
+	gLog.Error(args...)
+}
+func Warnf(format string, args ...interface{}) {
+	gLog.Warnf(format, args...)
+}
+func Warn(args ...interface{}) {
+	gLog.Warn(args...)
+}
+func Infof(format string, args ...interface{}) {
+	gLog.Infof(format, args...)
+}
+func Info(args ...interface{}) {
+	gLog.Info(args...)
+}
+func Debugf(format string, args ...interface{}) {
+	gLog.Debugf(format, args...)
+}
+func Debug(args ...interface{}) {
+	gLog.Debug(args...)
 }
 
-func (l DefaultLog) Fatalf(format string, args ...interface{}) {
-	golog.Fatalf(format, args...)
-}
-func (l DefaultLog) Fatal(args ...interface{}) {
-	golog.Fatal(args...)
-}
-func (l DefaultLog) Errorf(format string, args ...interface{}) {
-	golog.Printf("error|"+format, args...)
-}
-func (l DefaultLog) Error(args ...interface{}) {
-	golog.Printf("error|", args...)
+// 设置全局log
+var gLog LogI
+
+func init() {
+	if gLog == nil {
+		gLog = NewDefaultLog()
+	}
 }
 
-func (l DefaultLog) Warnf(format string, args ...interface{}) {
-	golog.Printf("warn|", args...)
-}
-func (l DefaultLog) Warn(args ...interface{}) {
-	golog.Printf("warn|", args...)
-}
-func (l DefaultLog) Infof(format string, args ...interface{}) {
-	golog.Printf("info|"+format, args...)
-}
-func (l DefaultLog) Info(args ...interface{}) {
-	golog.Printf("info|", args...)
-}
-func (l DefaultLog) Debugf(format string, args ...interface{}) {
-	golog.Printf("debug|"+format, args...)
-}
-func (l DefaultLog) Debug(args ...interface{}) {
-	golog.Printf("debug|", args...)
-}
-func (l DefaultLog) SetOutput(w io.Writer) {
-	golog.SetOutput(w)
-}
-
-func NewDefaultLog() Log {
-	log := DefaultLog{}
-	log.SetOutput(os.Stdout)
-	return log
+func SetGlobalLog(log LogI) {
+	gLog = log
 }

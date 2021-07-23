@@ -1,10 +1,10 @@
 // Author: coolliu
 // Date: 2021/5/21
 
-package app
+package common
 
 import (
-	"fmt"
+	"github.com/liuping001/fastgo/log"
 	"os"
 	"os/signal"
 	"syscall"
@@ -28,21 +28,9 @@ func (a *DefaultOnSignal) OnUser2() {
 
 }
 
-type OnSignalLog interface {
-	Infof(format string, args ...interface{})
-}
-type DefaultLog struct {
-}
-
-func (l *DefaultLog) Infof(format string, args ...interface{}) {
-	fmt.Printf(format, args...)
-}
-
 // 优雅退出
-func GracefulExit(onSignal OnSignal, log OnSignalLog) {
-	if log == nil {
-		log = &DefaultLog{}
-	}
+func GracefulExit(onSignal OnSignal) {
+
 	chanSignal := make(chan os.Signal)
 	// 监听信号
 	signal.Notify(chanSignal, syscall.SIGINT, syscall.SIGTERM, syscall.SIGUSR1, syscall.SIGUSR2)

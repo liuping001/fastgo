@@ -1,7 +1,7 @@
 // Author: coolliu
 // Date: 2021/5/21
 
-package app
+package common
 
 import (
 	"fmt"
@@ -24,7 +24,7 @@ func (a *MyApp) OnExit() {
 func TestGracefulExit(t *testing.T) {
 	fmt.Printf("测试优雅退出：TestGracefulExit\n")
 	myApp := MyApp{DefaultOnSignal{}}
-	GracefulExit(&myApp, nil)
+	GracefulExit(&myApp)
 	syscall.Kill(syscall.Getpid(), syscall.SIGUSR1)
 	time.Sleep(1 * time.Second) // 需要间隔一段时间才能发下一个信号，不然会被覆盖
 	syscall.Kill(syscall.Getpid(), syscall.SIGUSR2)

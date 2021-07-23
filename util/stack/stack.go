@@ -1,7 +1,7 @@
 // Author: coolliu
 // Date: 2021/5/24
 
-package util
+package stack
 
 import (
 	"fmt"
