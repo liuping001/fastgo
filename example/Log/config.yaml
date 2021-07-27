@@ -1,0 +1,6 @@
+zap_log:
+  logger:
+    maxsize: 100
+    maxbackups: 2
+    filename: "./test.log" #默认/tmp/<processname>-lumberjack.log
+  level: debug
