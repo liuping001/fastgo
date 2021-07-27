@@ -29,7 +29,7 @@ func (a *DefaultOnSignal) OnUser2() {
 }
 
 // 优雅退出
-func GracefulExit(onSignal OnSignal) {
+func RegisterSignal(onSignal OnSignal) {
 
 	chanSignal := make(chan os.Signal)
 	// 监听信号
@@ -58,4 +58,25 @@ func GracefulExit(onSignal OnSignal) {
 			}
 		}
 	}()
+}
+
+type onExitSignal struct {
+	DefaultOnSignal
+	exitFunc func()
+}
+
+func (a *onExitSignal) OnExit() {
+	if a.exitFunc != nil {
+		a.exitFunc()
+	}
+}
+
+func RegisterSignalExit(f func()) {
+	if f == nil {
+		return
+	}
+	signalHandler := &onExitSignal{
+		exitFunc: f,
+	}
+	RegisterSignal(signalHandler)
 }
