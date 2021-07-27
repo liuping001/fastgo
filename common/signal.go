@@ -39,22 +39,22 @@ func RegisterSignal(onSignal OnSignal) {
 		for s := range chanSignal {
 			switch s {
 			case syscall.SIGINT, syscall.SIGTERM:
-				log.Infof("on recv quit signal\n")
+				log.Infof("on recv quit signal")
 				if onSignal != nil {
 					onSignal.OnExit()
 				}
 			case syscall.SIGUSR1:
-				log.Infof("on signal user1\n")
+				log.Infof("on signal user")
 				if onSignal != nil {
 					onSignal.OnUser1()
 				}
 			case syscall.SIGUSR2:
-				log.Infof("on signal user2\n")
+				log.Infof("on signal user2")
 				if onSignal != nil {
 					onSignal.OnUser2()
 				}
 			default:
-				log.Infof("other signal:%v\n", s)
+				log.Infof("other signal:%v", s)
 			}
 		}
 	}()
