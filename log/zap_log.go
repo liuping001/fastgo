@@ -29,6 +29,6 @@ func NewZapLogger(conf *lumberjack.Logger) *zap.SugaredLogger {
 	encoder := zapcore.NewConsoleEncoder(encoderConfig)
 
 	core := zapcore.NewCore(encoder, writeSyncer, zapcore.DebugLevel)
-	logger := zap.New(core, zap.AddCaller())
+	logger := zap.New(core, zap.AddCaller(), zap.AddCallerSkip(1))
 	return logger.Sugar()
 }
